@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from tickets.models import Ticket
+from tickets.permissions import IsAgent
 from tickets.serializers import TicketListSerializer
 
 
@@ -13,6 +14,11 @@ class TicketListAPIView(generics.ListAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketListSerializer
     filter_backends = [DjangoFilterBackend]
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAgent]
     filterset_fields = ['is_resolved', 'created_at']
 
+
+class TicketDetailAPIView(generics.RetrieveAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketListSerializer
+    permission_classes = [IsAuthenticated, IsAgent]
