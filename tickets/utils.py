@@ -5,6 +5,7 @@ User = get_user_model()
 
 
 def get_available_agent():
+
     """
     This function filters the Users who are agents and fetches the best available agent. i.e. Agent
     with the least number of assigned tickets
@@ -22,4 +23,3 @@ def get_available_agent():
         raise Exception("Unable to assign agent!")
 
     return best_available_agent
-
