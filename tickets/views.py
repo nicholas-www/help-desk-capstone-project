@@ -15,3 +15,4 @@ class TicketListAPIView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     permission_classes = [IsAuthenticated, IsAdminUser]
     filterset_fields = ['is_resolved', 'created_at']
+
