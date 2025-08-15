@@ -17,7 +17,7 @@ class AccountListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['is_agent']
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class RegisterAPIView(generics.CreateAPIView):
