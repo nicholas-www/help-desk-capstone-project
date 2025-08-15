@@ -1,4 +1,15 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
+
+from tickets.models import Ticket
+from tickets.serializers import TicketListSerializer
+
 
 # Create your views here.
 
+class TicketListAPIView(generics.ListAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['is_resolved', 'created_at']
