@@ -40,3 +40,12 @@ class Ticket(models.Model):
 
         self.full_clean()
         super().save(*args, **kwargs)
+
+
+class TicketImage(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='ticket_images')
+    image = models.ImageField(upload_to='ticket_images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for Ticket({self.ticket.id})"
