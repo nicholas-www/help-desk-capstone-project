@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model, login
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics, status
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
@@ -32,9 +33,12 @@ class LoginAPIView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
 
+        token, created = Token.objects.get_or_create(user=user)
+
         login(request, user)
 
         return Response({
+            'token': token.key,
             "id": user.id,
             "first_name": user.first_name,
             "last_name": user.last_name,
