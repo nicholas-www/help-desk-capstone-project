@@ -10,6 +10,8 @@ class TicketImageSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(serializers.ModelSerializer):
+    ticket_images = TicketImageSerializer(read_only=True, many=True)
+
     class Meta:
         model = Ticket
         fields = '__all__'

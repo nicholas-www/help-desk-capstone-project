@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'tickets',
+    'responses',
 
     'rest_framework',
     'django_filters',
