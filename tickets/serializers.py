@@ -22,7 +22,13 @@ class CreateTicketSerializer(serializers.ModelSerializer):
         fields = ['title', 'description', 'ticket_images']
 
     def create(self, validated_data):
-        return Ticket.objects.create(
+        ticket = Ticket.objects.create(
             sender=self.context['request'].user,
             **validated_data
         )
+
+        images = validated_data.pop('ticket_images', [])  # fetch uploaded images or assign an empty list
+        for image in images:
+            TicketImage.objects.create(ticket=ticket, image=image)
+
+        return ticket
