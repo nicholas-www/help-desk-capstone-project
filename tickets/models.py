@@ -24,7 +24,7 @@ class Ticket(models.Model):
     is_resolved = models.BooleanField(default=False)  # To determine whether a ticket has been resolved or not
 
     def __str__(self):
-        return f"{self.title} by {self.sender}"
+        return f"{self.title}"
 
     def clean(self):
         if self.sender.is_agent:
