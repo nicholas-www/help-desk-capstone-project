@@ -50,10 +50,7 @@ AUTH_USER_MODEL = 'accounts.User'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # SessionAuthentication is included to make it easier to access endpoint in the browsable API
-        'rest_framework.authentication.SessionAuthentication',
-
-        # TokenAuthentication is included to make the API easier to test using Postman and so on.
+        # TokenAuthentication is used to make the API easier to test using Postman and so on.
         'rest_framework.authentication.TokenAuthentication'
     ]
 }
