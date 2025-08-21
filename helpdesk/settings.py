@@ -38,8 +38,11 @@ INSTALLED_APPS = [
 
     'accounts',
     'tickets',
+
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    'rest_framework.authtoken'
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -47,8 +50,11 @@ AUTH_USER_MODEL = 'accounts.User'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # SessionAuthentication is included to make it easier to access endpoint in the browsable API
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+
+        # TokenAuthentication is included to make the API easier to test using Postman and so on.
+        'rest_framework.authentication.TokenAuthentication'
     ]
 }
 

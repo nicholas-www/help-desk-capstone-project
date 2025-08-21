@@ -25,7 +25,6 @@ urlpatterns = [
     path('api/', include('tickets.urls'))
 ]
 
-
 # for storing and serving media files
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
