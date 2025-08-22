@@ -13,7 +13,7 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
     serializer_class = CreateTicketResponseSerializer
     permission_classes = [IsAgent]  # Only Agents are allowed to respond to tickets
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
         # Get ticket id from the url i.e api/tickets/<int:id>/respond
         ticket_id = self.kwargs.get('ticket_id')
 
@@ -24,6 +24,9 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
                 {'error': 'This Ticket has already been resolved'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
         # Set the title of the response to the title of the ticket
         title = f"RES: {ticket.title.upper()}"
@@ -37,3 +40,8 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
         # Update the is_resolved status of the ticket
         ticket.is_resolved = True
         ticket.save()
+
+        return Response(
+            {"message": "Ticket resolved successfully"},
+            status=status.HTTP_201_CREATED
+        )
