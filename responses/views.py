@@ -21,7 +21,7 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
         # Set the title of the response to the title of the ticket
         title = f"RES: {ticket.title.upper()}"
 
-        TicketResponse.objects.create(
+        serializer.save(
             ticket=ticket,
             sender=self.request.user,
             title=title
@@ -29,3 +29,4 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
 
         # Update the is_resolved status
         ticket.is_resolved = True
+        ticket.save()
