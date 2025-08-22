@@ -14,7 +14,7 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         # Get ticket id from the url i.e api/tickets/<int:id>/respond
-        ticket_id = serializer.kwargs.get('ticket_id')
+        ticket_id = self.kwargs.get('ticket_id')
         ticket = get_object_or_404(Ticket, id=ticket_id)
         title = f"RES: {ticket.title.upper()}"
 
