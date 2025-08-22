@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from responses.serializers import TicketResponseSerializer
 from tickets.models import Ticket, TicketImage
 
 
@@ -11,6 +12,15 @@ class TicketImageSerializer(serializers.ModelSerializer):
 
 class TicketListSerializer(serializers.ModelSerializer):
     ticket_images = TicketImageSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+
+
+class UserTicketListSerializer(serializers.ModelSerializer):
+    ticket_images = TicketImageSerializer(read_only=True, many=True)
+    ticket_responses = TicketResponseSerializer(read_only=True, many=True)
 
     class Meta:
         model = Ticket
