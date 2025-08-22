@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
 
 from responses.models import TicketResponse
 from responses.serializers import CreateTicketResponseSerializer
@@ -17,6 +18,12 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
         ticket_id = self.kwargs.get('ticket_id')
 
         ticket = get_object_or_404(Ticket, id=ticket_id)
+        # Prevent the creating of multiple responses for the same ticket
+        if ticket.is_resolved:
+            return Response(
+                {'error': 'This Ticket has already been resolved'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         # Set the title of the response to the title of the ticket
         title = f"RES: {ticket.title.upper()}"
@@ -27,6 +34,6 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
             title=title
         )
 
-        # Update the is_resolved status
+        # Update the is_resolved status of the ticket
         ticket.is_resolved = True
         ticket.save()
