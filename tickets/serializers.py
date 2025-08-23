@@ -12,6 +12,7 @@ class TicketImageSerializer(serializers.ModelSerializer):
 
 class TicketListSerializer(serializers.ModelSerializer):
     ticket_images = TicketImageSerializer(read_only=True, many=True)
+    ticket_responses = TicketResponseSerializer(read_only=True)
 
     class Meta:
         model = Ticket
@@ -20,7 +21,7 @@ class TicketListSerializer(serializers.ModelSerializer):
 
 class UserTicketListSerializer(serializers.ModelSerializer):
     ticket_images = TicketImageSerializer(read_only=True, many=True)
-    ticket_responses = TicketResponseSerializer(read_only=True, many=True)
+    ticket_responses = TicketResponseSerializer(read_only=True)
 
     class Meta:
         model = Ticket
