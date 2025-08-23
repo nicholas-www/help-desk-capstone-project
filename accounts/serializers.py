@@ -46,6 +46,30 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
+class AgentRegistrationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 'last_name',
+            'email', 'date_of_birth',
+            'password', 'password2'
+        ]
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError('Passwords do not match')
+        return data
+
+    def create(self, validated_data):
+        validated_data.pop('password2')
+
+        # Set agent status to true
+        return User.objects.create_user(is_agent=True, **validated_data)
+
+
 class LoginSerializer(serializers.Serializer):
     """
     serializer.Serializer is used because the LoginSerializer class will not add or create models

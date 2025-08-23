@@ -6,7 +6,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
-from accounts.serializers import UserSerializer, LoginSerializer, CustomerRegistrationSerializer
+from accounts.serializers import UserSerializer, LoginSerializer, CustomerRegistrationSerializer, \
+    AgentRegistrationSerializer
 
 # Create your views here.
 
@@ -23,6 +24,11 @@ class AccountListAPIView(generics.ListAPIView):
 
 class CustomerRegistrationAPIView(generics.CreateAPIView):
     serializer_class = CustomerRegistrationSerializer
+
+
+class AgentRegistrationAPIView(generics.CreateAPIView):
+    serializer_class = AgentRegistrationSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]  # Only Admins will be allowed to register new Agents
 
 
 class LoginAPIView(generics.CreateAPIView):
