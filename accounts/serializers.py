@@ -18,8 +18,11 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
-class RegisterSerializer(serializers.ModelSerializer):
-    """For registering new users/accounts """
+class CustomerRegistrationSerializer(serializers.ModelSerializer):
+    """
+    For registering new Customers
+    A separate serializer is used to prevent normal users from registering as Agents
+    """
 
     password = serializers.CharField(write_only=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True)
@@ -28,8 +31,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'first_name', 'last_name',
-            'email', 'is_agent',
-            'date_of_birth', 'password', 'password2'
+            'email', 'date_of_birth',
+            'password', 'password2'
         ]
 
     def validate(self, data):
@@ -39,6 +42,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password2')
+        # is_agent is False by default
         return User.objects.create_user(**validated_data)
 
 

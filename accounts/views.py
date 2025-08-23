@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
-from accounts.serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from accounts.serializers import UserSerializer, LoginSerializer, CustomerRegistrationSerializer
 
 # Create your views here.
 
@@ -21,8 +21,8 @@ class AccountListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
 
-class RegisterAPIView(generics.CreateAPIView):
-    serializer_class = RegisterSerializer
+class CustomerRegistrationAPIView(generics.CreateAPIView):
+    serializer_class = CustomerRegistrationSerializer
 
 
 class LoginAPIView(generics.CreateAPIView):
