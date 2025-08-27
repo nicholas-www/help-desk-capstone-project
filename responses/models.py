@@ -7,6 +7,9 @@ User = get_user_model()
 
 
 class TicketResponse(models.Model):
+    """
+    Model for ticket Responses
+    """
     ticket = models.OneToOneField(Ticket, on_delete=models.CASCADE, related_name='ticket_response')
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)

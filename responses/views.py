@@ -18,6 +18,7 @@ class CreateTicketResponseAPIView(generics.CreateAPIView):
         ticket_id = self.kwargs.get('ticket_id')
 
         ticket = get_object_or_404(Ticket, id=ticket_id)
+        
         # Prevent the creating of multiple responses for the same ticket
         if ticket.is_resolved:
             return Response(

@@ -10,6 +10,9 @@ User = get_user_model()
 
 
 class Ticket(models.Model):
+    """
+    A model of the ticket db
+    """
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_tickets')
     title = models.CharField(max_length=255, blank=False, null=False)
     description = models.TextField(blank=False, null=False)
@@ -36,13 +39,15 @@ class Ticket(models.Model):
     def save(self, *args, **kwargs):
         if not self.assigned_to:
             self.assigned_to = get_available_agent()
-            print("assigned_to", self.assigned_to)
 
         self.full_clean()
         super().save(*args, **kwargs)
 
 
 class TicketImage(models.Model):
+    """
+    A model of Images which can be optionally added to tickets.
+    """
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='ticket_images')
     image = models.ImageField(upload_to='ticket_images/')
     uploaded_at = models.DateTimeField(auto_now_add=True)

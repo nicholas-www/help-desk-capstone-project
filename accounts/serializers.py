@@ -37,7 +37,7 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password'] != data['password2']:
-            raise serializers.ValidationError('Passwords do not match')
+            raise serializers.ValidationError({'password': 'Passwords do not match.'})
         return data
 
     def create(self, validated_data):
@@ -47,6 +47,10 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
 
 
 class AgentRegistrationSerializer(serializers.ModelSerializer):
+    """
+    To register only new Agents
+    """
+    
     password = serializers.CharField(write_only=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True)
 
@@ -72,6 +76,7 @@ class AgentRegistrationSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     """
+    Basic Login
     serializer.Serializer is used because the LoginSerializer class will not add or create models
     """
     email = serializers.EmailField()
