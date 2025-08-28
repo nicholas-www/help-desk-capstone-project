@@ -35,6 +35,12 @@ class CreateTicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = ['title', 'description', 'ticket_images']
 
+    def validate(self, attrs):
+        user = self.context['request'].user
+        if user.is_staff or user.is_superuser:
+            raise serializers.ValidationError("Admins and agents cannot create tickets.")
+        return attrs
+
     def create(self, validated_data):
         images = validated_data.pop('ticket_images', [])  # fetch uploaded images or assign an empty list
 
