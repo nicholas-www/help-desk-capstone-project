@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
 
+    'markdown_view'
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -67,7 +69,7 @@ ROOT_URLCONF = 'helpdesk.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

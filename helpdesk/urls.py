@@ -1,8 +1,18 @@
+import os
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
+
+from django.http import HttpResponse
+
+
+def api_root(request):
+    return HttpResponse("Welcome to the HelpDesk API. See /api/docs/ for documentation.")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +22,11 @@ urlpatterns = [
 
     # Token
     path('api/token/', obtain_auth_token, name='api_token_auth'),
+
+    path('api/', api_root, name='api_root'),
+
+    # Endpoint for API Docs
+    path('api/docs/', TemplateView.as_view(template_name='api_docs/markdown.html'), name='api-docs')
 ]
 
 # for storing and serving media files

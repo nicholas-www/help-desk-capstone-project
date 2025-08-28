@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Converted from Markdown</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    h1, h2, h3 { color: #333; margin-top: 1.5em; margin-bottom: 0.5em; }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.5em; }
+    h3 { font-size: 1.2em; }
+    code {
+      background: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      line-height: 1.4;
+    }
+    blockquote {
+      border-left: 4px solid #ddd;
+      margin: 1em 0;
+      padding-left: 20px;
+      color: #666;
+      font-style: italic;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 2em;
+    }
+    li {
+      margin: 0.5em 0;
+    }
+  </style>
+</head>
+<body>
+<h1>HelpDesk API Documentation</h1>
+<h2>Overview</h2>
+<p>The <strong>HelpDesk API</strong> allows you to manage users, tickets, and responses. All endpoints are RESTful and use <strong>token authentication</strong>.</p>
+<ul>
+<li><strong>Base URL:</strong> <code>/api/</code></li>
+<li><strong>Authentication:</strong> Token-based</li>
+<li><strong>Content-Type:</strong> <code>application/json</code></li>
+</ul>
+<hr>
+<h2>Authentication</h2>
+<h3>Obtain Token</h3>
+<p><strong>POST</strong> <code>/api/token/</code></p>
+<p><strong>Request body:</strong></p>
+<pre><code class="language-json">{
+  &quot;email&quot;: &quot;example@email.com&quot;,
+  &quot;password&quot;: &quot;your_password&quot;
+}
+</code></pre>
+<p><strong>Response body:</strong></p>
+<pre><code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;email&quot;: &quot;example@email.com&quot;,
+    &quot;token&quot;: &quot;your_token&quot;
+}
+</code></pre>
+<h3>Login</h3>
+<p><strong>POST</strong> <code>/api/login/</code></p>
+<p><strong>Request body:</strong></p>
+<pre><code class="language-json">{
+  &quot;email&quot;: &quot;example@email.com&quot;,
+  &quot;password&quot;: &quot;your_password&quot;
+}
+</code></pre>
+<p><strong>Response body:</strong></p>
+<pre><code class="language-json">{
+  &quot;token&quot;: &quot;your_token&quot;,
+  &quot;id&quot;: 1,
+  &quot;first_name&quot;: &quot;John&quot;,
+  &quot;last_name&quot;: &quot;Doe&quot;
+}
+</code></pre>
+<h3>Logout</h3>
+<p><strong>POST</strong> <code>/api/logout/</code></p>
+<p><strong>Headers:</strong></p>
+<pre><code>Authorization: Token your_token
+</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code class="language-json">{
+  &quot;detail&quot;: &quot;Successfully logged out.&quot;
+}
+</code></pre>
+<hr>
+<h2>Users</h2>
+<h3>Register Customer</h3>
+<p><strong>POST</strong> <code>/api/register/customer/</code></p>
+<p><strong>Request body:</strong></p>
+<pre><code class="language-json">{
+  &quot;first_name&quot;: &quot;John&quot;,
+  &quot;last_name&quot;: &quot;Doe&quot;,
+  &quot;email&quot;: &quot;john@example.com&quot;,
+  &quot;date_of_birth&quot;: &quot;YYYY-MM-DD&quot;,
+  &quot;password&quot;: &quot;your_password&quot;,
+  &quot;password2&quot;: &quot;your_password&quot;
+}
+</code></pre>
+<p><strong>Response body:</strong></p>
+<pre><code class="language-json">{
+  &quot;first_name&quot;: &quot;John&quot;,
+  &quot;last_name&quot;: &quot;Doe&quot;,
+  &quot;email&quot;: &quot;john@example.com&quot;,
+  &quot;date_of_birth&quot;: &quot;YYYY-MM-DD&quot;
+}
+</code></pre>
+<h3>Register Agent</h3>
+<p><strong>POST</strong> <code>/api/register/agent/</code>
+<strong>Permissions:</strong> Admin only</p>
+<p><strong>Request body and response:</strong> Same as Customer Registration.</p>
+<h3>List Users</h3>
+<p><strong>GET</strong> <code>/api/accounts/</code>
+<strong>Permissions:</strong> Admin only</p>
+<p><strong>Response:</strong></p>
+<pre><code class="language-json">[
+  {
+    &quot;id&quot;: 1,
+    &quot;first_name&quot;: &quot;John&quot;,
+    &quot;last_name&quot;: &quot;Doe&quot;,
+    &quot;email&quot;: &quot;john@example.com&quot;,
+    &quot;date_of_birth&quot;: &quot;YYYY-MM-DD&quot;,
+    &quot;is_agent&quot;: false
+  }
+]
+</code></pre>
+<hr>
+<h2>Tickets</h2>
+<h3>List Tickets</h3>
+<p><strong>GET</strong> <code>/api/tickets/</code>
+<strong>Permissions:</strong> Agents only</p>
+<p><strong>Query parameters (filtering):</strong> <code>is_resolved</code>, <code>created_at</code></p>
+<p><strong>Response:</strong></p>
+<pre><code class="language-json">[
+  {
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;Cannot login&quot;,
+    &quot;description&quot;: &quot;User cannot login to the portal&quot;,
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;is_resolved&quot;: false,
+    &quot;ticket_images&quot;: [],
+    &quot;ticket_response&quot;: []
+  }
+]
+</code></pre>
+<h3>List User Tickets</h3>
+<p><strong>GET</strong> <code>/api/accounts/{id}/tickets/</code>
+<strong>Permissions:</strong> Users only, cannot be agents</p>
+<p><strong>Response:</strong> Same format as Ticket List.</p>
+<h3>Create Ticket</h3>
+<p><strong>POST</strong> <code>/api/tickets/create/</code>
+<strong>Permissions:</strong> Customers only</p>
+<p><strong>Request body:</strong></p>
+<pre><code class="language-json">{
+  &quot;title&quot;: &quot;Issue title&quot;,
+  &quot;description&quot;: &quot;Detailed description&quot;,
+  &quot;ticket_images&quot;: [&quot;image_url1&quot;, &quot;image_url2&quot;]
+}
+</code></pre>
+<p><strong>Response:</strong> Returns created ticket with images.</p>
+<h3>Retrieve Ticket</h3>
+<p><strong>GET</strong> <code>/api/tickets/{id}/</code>
+<strong>Permissions:</strong> Agents only</p>
+<p><strong>Response:</strong> Ticket object as in list.</p>
+<hr>
+<h2>Ticket Responses</h2>
+<h3>Create Response</h3>
+<p><strong>POST</strong> <code>/api/tickets/{ticket_id}/respond/</code></p>
+<p><strong>Permissions:</strong> Agents only</p>
+<p><strong>Request body:</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Resolution message&quot;
+}
+</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Ticket resolved successfully&quot;
+}
+</code></pre>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Cannot respond if ticket is already resolved</li>
+<li>Response <code>title</code> auto-prefixed with ticket title</li>
+</ul>
+<h3>List Responses (via Ticket)</h3>
+<p>Included in ticket endpoints under <code>ticket_response</code> field.</p>
+<hr>
+<h2>Filtering &amp; Pagination</h2>
+<ul>
+<li>Filter tickets: <code>/api/tickets/?is_resolved=false&amp;created_at=2025-08-28</code></li>
+<li>Pagination: Default page size 10, use <code>?page=2</code> for next page.</li>
+</ul>
+<hr>
+<h2>Error Codes</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>400</td>
+<td>Bad request / validation error</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized / missing token</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden / insufficient permissions</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Resource not found</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+
+</body>
+</html>
