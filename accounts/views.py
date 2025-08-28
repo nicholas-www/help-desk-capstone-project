@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer, LoginSerializer, CustomerRegistrationSerializer, \
     AgentRegistrationSerializer
@@ -83,3 +84,19 @@ class LoginAPIView(generics.CreateAPIView):
             "first_name": user.first_name,
             "last_name": user.last_name,
         }, status=status.HTTP_200_OK)
+
+
+class LogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = Token.objects.get(user=request.user)
+            token.delete()
+            return Response({
+                'message': 'Logged out successfully!'
+            }, status=status.HTTP_200_OK)
+        except Token.DoesNotExist:
+            return Response(
+                {'error': 'Token not found'}, status=status.HTTP_400_BAD_REQUEST
+            )

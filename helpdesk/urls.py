@@ -20,9 +20,6 @@ urlpatterns = [
     path('api/', include('tickets.urls')),
     path('api/', include('responses.urls')),
 
-    # Token
-    path('api/token/', obtain_auth_token, name='api_token_auth'),
-
     path('api/', api_root, name='api_root'),
 
     # Endpoint for API Docs
