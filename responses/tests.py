@@ -8,6 +8,7 @@ from tickets.models import Ticket
 
 User = get_user_model()
 
+
 class TicketResponseTests(TestCase):
     def setUp(self):
         self.client = APIClient()
@@ -38,7 +39,7 @@ class TicketResponseTests(TestCase):
         )
 
     def test_ticket_response_creation(self):
-        """Agent can respond to a ticket and resolve it"""
+        """Agent can respond to a ticket and resolve it. NB: admins are also agents"""
         url = reverse("create-response", kwargs={"ticket_id": self.ticket.id})
         data = {"message": "We have reset your password, try again."}
 
