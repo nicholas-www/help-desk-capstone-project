@@ -1,5 +1,7 @@
 # HelpDesk API Documentation
 
+---
+
 ## Overview
 
 The **HelpDesk API** allows you to manage users, tickets, and responses. All endpoints are RESTful and use **token authentication**.

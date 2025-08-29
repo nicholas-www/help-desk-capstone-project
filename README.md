@@ -1,13 +1,26 @@
-# HelpDesk API
+# HelpDesk API 
+## [Click here](ewusi.pythonanywhere.com) for live demo
 
 ## Overview
 
-**HelpDesk API** is a Django REST Framework application for managing users, tickets, and responses in a support system.
+**HelpDesk API** is a Django REST Framework application for managing users, tickets, and responses in a support system. Customers raise Tickets, which are then resolved by Agents.
+
 It supports token-based authentication and role-based access for normal users, agents, and admins.
 
 * **Backend:** Django 5.x + DRF
-* **Database:** PostgreSQL
+* **Database:** SQLite
 * **Authentication:** Token Authentication
+
+---
+
+## Live Demo
+### 🔗[ewusi.pythonanywhere.com](ewusi.pythonanywhere.com)
+### *NB:* To ensure the app works, the live demo features an admin user with the following credentials:
+-*Email* ```admin@helpdesk.com```
+
+-*Password* ```admin@helpdesk2025```
+
+Login or use a Token for the Admin to create a new Agent
 
 ---
 
@@ -291,11 +304,6 @@ pip install -r requirements.txt
 ```env
 SECRET_KEY=your_secret_key
 DEBUG=True
-DB_NAME=your_db_name
-DB_USERNAME=your_db_user
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_PORT=5432
 ```
 
 3. Run migrations and start server:
